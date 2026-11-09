@@ -1,0 +1,80 @@
+/* Paleta del vivero de suculentas */
+:root {
+    --suc-fondo: #F4F6F1;
+    --suc-oscuro: #2F4A3A;
+    --suc-medio: #5E8C6A;
+    --suc-claro: #A8C69F;
+    --suc-acento: #E3A6A1;
+    --suc-texto: #1F2D24;
+}
+
+body {
+    background-color: var(--suc-fondo);
+    color: var(--suc-texto);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--suc-oscuro);
+}
+
+/* Header */
+.suc-encabezado {
+    background-color: var(--suc-oscuro);
+    color: #FFFFFF;
+}
+
+.suc-encabezado h1 {
+    color: #FFFFFF;
+}
+
+/* Navbar */
+.suc-navbar {
+    background-color: var(--suc-medio);
+}
+
+.suc-navbar .nav-link {
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: .6rem 1rem;
+}
+
+.suc-navbar .nav-link:hover,
+.suc-navbar .nav-link.active {
+    background-color: var(--suc-claro);
+    color: var(--suc-texto);
+}
+
+/* Footer */
+.suc-pie {
+    background-color: var(--suc-oscuro);
+    color: #FFFFFF;
+}
+
+/* Portada de inicio */
+.suc-portada {
+    background-color: #FFFFFF;
+    border-left: 6px solid var(--suc-acento);
+}
+
+/* Botones */
+.btn-suc {
+    background-color: var(--suc-medio);
+    border-color: var(--suc-medio);
+    color: #FFFFFF;
+}
+
+.btn-suc:hover, .btn-suc:focus {
+    background-color: var(--suc-oscuro);
+    border-color: var(--suc-oscuro);
+    color: #FFFFFF;
+}
+
+/* Tarjetas */
+.card-suc {
+    background-color: #FFFFFF;
+    border: 1px solid var(--suc-claro);
+}
+
+.suc-icono {
+    color: var(--suc-medio);
+}
