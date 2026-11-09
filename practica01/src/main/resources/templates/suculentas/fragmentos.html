@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <!-- Fragmento 1: campos del formulario (se reutilizan al agregar y al editar) -->
+        <div th:fragment="campos" class="row g-3">
+            <div class="col-md-6">
+                <label for="nombreComun" class="form-label" th:text="#{suculenta.nombreComun}">Nombre común</label>
+                <input type="text" class="form-control" th:field="*{nombreComun}" maxlength="100" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="nombreCientifico" class="form-label" th:text="#{suculenta.nombreCientifico}">Nombre científico</label>
+                <input type="text" class="form-control fst-italic" th:field="*{nombreCientifico}" maxlength="150" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="familia" class="form-label" th:text="#{suculenta.familia}">Familia</label>
+                <input type="text" class="form-control" th:field="*{familia}" maxlength="80" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="colorPrincipal" class="form-label" th:text="#{suculenta.colorPrincipal}">Color principal</label>
+                <input type="text" class="form-control" th:field="*{colorPrincipal}" maxlength="50" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="alturaCm" class="form-label" th:text="#{suculenta.alturaCm}">Altura (cm)</label>
+                <input type="number" class="form-control" th:field="*{alturaCm}" min="0.01" max="9999.99" step="0.01" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="precioEstimado" class="form-label" th:text="#{suculenta.precioEstimado}">Precio estimado</label>
+                <input type="number" class="form-control" th:field="*{precioEstimado}" min="0" max="99999999.99" step="0.01" required="required"/>
+            </div>
+            <div class="col-md-6">
+                <label for="nivelRiego" class="form-label" th:text="#{suculenta.nivelRiego}">Nivel de riego</label>
+                <select class="form-select" th:field="*{nivelRiego}" required="required">
+                    <option value="" th:text="#{suculenta.seleccione}">Seleccione</option>
+                    <option value="Bajo" th:text="#{suculenta.riego.bajo}">Bajo</option>
+                    <option value="Medio" th:text="#{suculenta.riego.medio}">Medio</option>
+                    <option value="Alto" th:text="#{suculenta.riego.alto}">Alto</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="exposicionSolar" class="form-label" th:text="#{suculenta.exposicionSolar}">Exposición solar</label>
+                <input type="text" class="form-control" th:field="*{exposicionSolar}" maxlength="50" required="required"/>
+            </div>
+            <div class="col-12">
+                <label for="rutaImagen" class="form-label" th:text="#{suculenta.rutaImagen}">Ruta o URL de la imagen</label>
+                <input type="text" class="form-control" th:field="*{rutaImagen}" maxlength="255" required="required"
+                       th:placeholder="#{suculenta.rutaImagen.ayuda}"/>
+            </div>
+        </div>
+
+        <!-- Fragmento 2: botón y ventana modal para agregar una suculenta -->
+        <section th:fragment="agregar">
+            <div class="mb-3">
+                <button type="button" class="btn btn-suc" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+                    <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>
+                    <span th:text="#{suculenta.agregar}">Agregar</span></button>
+            </div>
+
+            <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="tituloAgregar" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header suc-modal">
+                            <h5 class="modal-title" id="tituloAgregar">
+                                <span th:text="#{suculenta.agregar}">Agregar</span></h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                    th:aria-label="#{accion.cerrar}"></button>
+                        </div>
+                        <form th:action="@{/suculentas/registrar}" th:object="${suculenta}" method="post">
+                            <div class="modal-body">
+                                <div th:replace="~{suculentas/fragmentos :: campos}"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <span th:text="#{accion.cancelar}">Cancelar</span></button>
+                                <button type="submit" class="btn btn-suc">
+                                    <span th:text="#{accion.guardar}">Guardar</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fragmento 3: tabla con las suculentas registradas en la base de datos -->
+        <section th:fragment="tabla">
+            <div class="card card-suc">
+                <div class="card-header"><h4 class="mb-0" th:text="#{suculenta.listado}">Listado</h4></div>
+                <div class="card-body">
+                    <div class="table-responsive" th:if="${suculentas != null and !suculentas.isEmpty()}">
+                        <table class="table table-striped table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th th:text="#{suculenta.imagen}">Imagen</th>
+                                    <th th:text="#{suculenta.nombreComun}">Nombre común</th>
+                                    <th th:text="#{suculenta.familia}">Familia</th>
+                                    <th th:text="#{suculenta.colorPrincipal}">Color</th>
+                                    <th class="text-end" th:text="#{suculenta.alturaCm}">Altura</th>
+                                    <th class="text-end" th:text="#{suculenta.precioEstimado}">Precio</th>
+                                    <th th:text="#{suculenta.nivelRiego}">Riego</th>
+                                    <th th:text="#{suculenta.exposicionSolar}">Exposición</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="s : ${suculentas}">
+                                    <td th:text="${s.idSuculenta}">1</td>
+                                    <td>
+                                        <img class="img-suculenta rounded"
+                                             th:src="${#strings.startsWith(s.rutaImagen, 'http')} ? ${s.rutaImagen} : @{/{ruta}(ruta=${s.rutaImagen})}"
+                                             th:alt="${s.nombreComun}" th:title="${s.rutaImagen}"/>
+                                        <span class="sin-imagen rounded d-none" th:title="${s.rutaImagen}">
+                                            <i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
+                                    </td>
+                                    <td>
+                                        <strong th:text="${s.nombreComun}">Nombre</strong><br/>
+                                        <small class="fst-italic text-muted" th:text="${s.nombreCientifico}">Científico</small>
+                                    </td>
+                                    <td th:text="${s.familia}">Familia</td>
+                                    <td th:text="${s.colorPrincipal}">Color</td>
+                                    <td class="text-end text-nowrap" th:text="${#numbers.formatDecimal(s.alturaCm, 1, 'COMMA', 2, 'POINT')} + ' cm'">0 cm</td>
+                                    <td class="text-end text-nowrap" th:text="'$' + ${#numbers.formatDecimal(s.precioEstimado, 1, 'COMMA', 2, 'POINT')}">$0</td>
+                                    <td><span class="badge badge-riego" th:text="${s.nivelRiego}">Bajo</span></td>
+                                    <td th:text="${s.exposicionSolar}">Exposición</td>
+                                    <td class="text-end text-nowrap">
+                                        <a th:href="@{/suculentas/editar/{id}(id=${s.idSuculenta})}" class="btn btn-sm btn-acento">
+                                            <i class="fa-solid fa-pen me-1" aria-hidden="true"></i>
+                                            <span th:text="#{accion.editar}">Editar</span></a>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal" data-bs-target="#modalBorrar"
+                                                th:data-id="${s.idSuculenta}" th:data-nombre="${s.nombreComun}">
+                                            <i class="fa-solid fa-trash me-1" aria-hidden="true"></i>
+                                            <span th:text="#{accion.eliminar}">Eliminar</span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center p-2" th:if="${suculentas == null or suculentas.isEmpty()}">
+                        <span th:text="#{lista.vacia}">No hay registros</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span th:text="#{suculenta.total}">Total</span>: <strong th:text="${totalSuculentas}">0</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fragmento 4: ventana modal para confirmar la eliminación -->
+        <section th:fragment="confirmarBorrado">
+            <div class="modal fade" id="modalBorrar" tabindex="-1" aria-labelledby="tituloBorrar" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form th:action="@{/suculentas/borrar}" method="post">
+                            <input type="hidden" name="id" id="borrarId"/>
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="tituloBorrar">
+                                    <span th:text="#{confirmar.titulo}">Confirmar</span></h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        th:aria-label="#{accion.cerrar}"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><span th:text="#{confirmar.texto}">¿Desea eliminar</span> <strong id="borrarNombre"></strong>?</p>
+                                <p class="text-muted mb-0" th:text="#{confirmar.aviso}">No se puede deshacer</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <span th:text="#{accion.cancelar}">Cancelar</span></button>
+                                <button type="submit" class="btn btn-danger">
+                                    <span th:text="#{accion.eliminar}">Eliminar</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fragmento 5: formulario de edición (se usa en editar.html) -->
+        <section th:fragment="formularioEditar">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <form th:action="@{/suculentas/registrar}" th:object="${suculenta}" method="post">
+                        <input type="hidden" th:field="*{idSuculenta}"/>
+                        <div class="row g-3 mb-3">
+                            <div class="col-6 d-grid">
+                                <a th:href="@{/suculentas}" class="btn btn-secondary">
+                                    <span th:text="#{accion.regresar}">Regresar</span></a>
+                            </div>
+                            <div class="col-6 d-grid">
+                                <button type="submit" class="btn btn-suc">
+                                    <span th:text="#{accion.guardar}">Guardar</span></button>
+                            </div>
+                        </div>
+                        <div class="card card-suc">
+                            <div class="card-header"><h4 class="mb-0" th:text="#{suculenta.editar}">Editar</h4></div>
+                            <div class="card-body">
+                                <div th:replace="~{suculentas/fragmentos :: campos}"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </body>
+</html>

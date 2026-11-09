@@ -16,8 +16,10 @@
 
         <main th:replace="${contenido}"></main>
 
+        <section th:replace="~{general/fragmentos :: avisoResultado}"></section>
         <footer th:replace="~{general/fragmentos :: pie}"></footer>
 
         <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/vivero.js}"></script>
     </body>
 </html>

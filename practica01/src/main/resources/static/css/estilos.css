@@ -78,3 +78,46 @@ h1, h2, h3, h4, h5, h6 {
 .suc-icono {
     color: var(--suc-medio);
 }
+
+.btn-acento {
+    background-color: var(--suc-acento);
+    border-color: var(--suc-acento);
+    color: var(--suc-texto);
+}
+
+.btn-acento:hover, .btn-acento:focus {
+    background-color: #D18E88;
+    border-color: #D18E88;
+    color: var(--suc-texto);
+}
+
+/* Modales y avisos */
+.suc-modal, .suc-toast-exito {
+    background-color: var(--suc-medio);
+    color: #FFFFFF;
+}
+
+.suc-modal .modal-title {
+    color: #FFFFFF;
+}
+
+/* Imagen de cada suculenta en el listado */
+.img-suculenta, .sin-imagen {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.sin-imagen {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--suc-claro);
+    color: var(--suc-oscuro);
+    font-size: 1.4rem;
+}
+
+.badge-riego {
+    background-color: var(--suc-claro);
+    color: var(--suc-texto);
+}

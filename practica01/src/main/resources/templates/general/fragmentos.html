@@ -50,5 +50,29 @@
             </div>
         </footer>
 
+        <!-- Fragmento 4: Toast con el mensaje de resultado (RedirectAttributes) -->
+        <section th:fragment="avisoResultado">
+            <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080;">
+                <div th:if="${mensajeExito != null}" class="toast border-0" role="status"
+                     aria-live="polite" aria-atomic="true">
+                    <div class="toast-header suc-toast-exito">
+                        <strong class="me-auto" th:text="#{aviso.exito}">Listo</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                                th:aria-label="#{accion.cerrar}"></button>
+                    </div>
+                    <div class="toast-body" th:text="${mensajeExito}">Mensaje</div>
+                </div>
+                <div th:if="${mensajeError != null}" class="toast border-0" role="alert"
+                     aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-danger text-white">
+                        <strong class="me-auto" th:text="#{aviso.error}">Atención</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                                th:aria-label="#{accion.cerrar}"></button>
+                    </div>
+                    <div class="toast-body" th:text="${mensajeError}">Mensaje</div>
+                </div>
+            </div>
+        </section>
+
     </body>
 </html>
